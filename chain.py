@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 from langchain.output_parsers import ResponseSchema
 from langchain.output_parsers import StructuredOutputParser
 
-place_sсhema = ResponseSchema(name="place",
+type_of_the_place_sсhema = ResponseSchema(name="type_of_the_place",
                               description="The type of the place to go on a trip .\
                               about the type of the place,\
                              if this information is not found, output\
@@ -28,7 +28,7 @@ tags_schema = ResponseSchema(name="tags",
                               Give them as a comma separated Python list, shorten the detains\
                               if this information is not found, output [].")
 
-response_schemas = [place_sсhema,
+response_schemas = [type_of_the_place_sсhema,
                     location_schema,
                     tags_schema]
 
@@ -43,9 +43,6 @@ llm = ChatOpenAI(temperature=0.0, model="gpt-3.5-turbo")
 # prompt template 1: translate to english
 first_prompt = ChatPromptTemplate.from_template(
     """For the following text, extract the following information: \
-    companions: Who also was on the vacation? \
-    Information about the people, who were on the trip \
-    and output them as a comma separated string. \
     type of the place: Why kind of place is user looking for? \
     Information about the type of the place (hotel, cafe, museum and etc.), \
     if this information is not found, output Unknown. \

@@ -1,3 +1,4 @@
+import json
 import sqlite3
 
 from langchain.output_parsers import StructuredOutputParser
@@ -10,14 +11,10 @@ def search_places_by_location(location, request_tags):
 
     cursor.execute("SELECT * FROM places WHERE location = ?", (location,))
     results = cursor.fetchall()
-    print(results)
-    accurate_results = []
-    for row in results:
-        res = search_by_tags(row[3], request_tags)
-        print(search_by_tags(row[3], request_tags))
-        if int(res) >= 0.5:
-            accurate_results.append(row)
-
+    scored_results = [(row, search_by_tags(row[3], request_tags)) for row in results]
+    sorted_results = sorted(scored_results, key=lambda x: x[1], reverse=True)
+    accurate_results = [row for row, _ in sorted_results]
+    print(accurate_results)
     return accurate_results
 
 
@@ -47,4 +44,7 @@ def search_by_tags(description_tags, request_tags):
     messages = prompt.format_messages(description_tags=description_tags, request_tags=request_tags,
                                       format_instructions=format_instructions)
     response = chat(messages)
-    return output_parser.parse(response.content)
+    cleaned = response.content.replace("```json", "").replace("```", "").strip()
+    parsed = json.loads(cleaned)
+    accuracy = parsed["accuracy"]
+    return accuracy

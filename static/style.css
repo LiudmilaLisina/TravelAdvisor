@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f6f6f6;
+}
+.chat {
+    margin-bottom: 20px;
+}
+.user {
+    text-align: right;
+    color: blue;
+}
+.bot {
+    text-align: left;
+    color: green;
+}
+input {
+    width: 70%;
+    padding: 10px;
+}
+button {
+    padding: 10px;
+}

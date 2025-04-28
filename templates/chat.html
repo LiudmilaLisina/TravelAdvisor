@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <title>Chat with LLM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Ask something</h1>
+    <div class="chat">
+        {% for role, message in chat_history %}
+            <div class="{{ role }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    <form method="POST">
+        <input name="message" type="text" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>
