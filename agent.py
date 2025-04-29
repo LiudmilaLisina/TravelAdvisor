@@ -60,7 +60,7 @@ def extract_trip_destination(review: str) -> str:
 def general_qa() -> str:
     """Answer the general travel questions. Use this for any question that does NOT require choosing or
     analyzing a travel destination."""
-    return "Here's a quick answer to your travel question! Let me know when you're ready to search for a destination."
+    return "Sorry I only answer to travelling question! Let me know when you're ready to search for a destination."
 
 
 prompt = ChatPromptTemplate.from_messages(
@@ -86,7 +86,7 @@ tools = [
         name="general_qa",
         description="Answer travel-related questions only if they do NOT ask for places, hotels, destinations, "
                     "or anything location-based.",
-        return_direct=False
+        return_direct=True
     )
 ]
 agent = create_openai_functions_agent(llm, tools, prompt)
